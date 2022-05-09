@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AppHeader from "./components/AppHeader.vue";
+</script>
 
 <template>
-  <h1 class="text-blue-400">Hey</h1>
+  <div class="flex justify-center items-center min-h-screen">
+    <AppHeader title="Password Generator" />
+  </div>
 </template>
