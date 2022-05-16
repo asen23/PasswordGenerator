@@ -1,25 +1,28 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from "vue";
+
+const props = defineProps<{
   label: string;
   modelValue: boolean;
 }>();
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits<{
+  (event: "update:modelValue", value: boolean): void;
+}>();
 
-function updateValue(value: boolean) {
-  emit("update:modelValue", value);
-}
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value: boolean) {
+    emit("update:modelValue", value);
+  },
+});
 </script>
 
 <template>
   <div>
-    <input
-      type="checkbox"
-      name="{{label}}"
-      id=""
-      :checked="modelValue"
-      @change="updateValue(($event.target as HTMLInputElement).checked)"
-    />
+    <input type="checkbox" name="{{label}}" id="" v-model="value" />
     &nbsp;
     <label for="{{label}}">{{ label }}</label>
   </div>

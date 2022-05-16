@@ -1,15 +1,21 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from "vue";
+
+const props = defineProps<{
   label: string;
   modelValue: number;
 }>();
 
 const emit = defineEmits(["update:modelValue"]);
 
-function updateValue(value: string) {
-  const num = parseInt(value);
-  emit("update:modelValue", isNaN(num) ? 20 : num);
-}
+const value = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(value: number) {
+    emit("update:modelValue", value);
+  },
+});
 </script>
 
 <template>
@@ -21,8 +27,8 @@ function updateValue(value: string) {
       name="{{label}}"
       min="1"
       id=""
-      :value="modelValue"
-      @input="updateValue(($event.target as HTMLInputElement).value)"
+      v-model="value"
+      class="rounded-sm px-2 text-black"
     />
   </div>
 </template>
